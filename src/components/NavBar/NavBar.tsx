@@ -1,0 +1,177 @@
+"use client";
+import {
+  AppBar,
+  Avatar,
+  Box,
+  Button,
+  Container,
+  Icon,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Tooltip,
+  Typography,
+} from "@mui/material";
+import React from "react";
+import MenuIcon from "@mui/icons-material/Menu";
+import logo from "../../../public/img/logoGrande.png";
+
+export type NavBarProps = {
+  // types...
+};
+
+const pages = ["Kardex"];
+const settings = ["Profile", "Logout"];
+
+const NavBar: React.FC<NavBarProps> = () => {
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+    null
+  );
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+    null
+  );
+
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+  return (
+    <AppBar
+      position="fixed"
+      style={{ background: "#1F262E", fontFamily: "Edo" }}
+    >
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <Icon
+            sx={{
+              width: 45,
+              height: 65,
+              display: { xs: "none", md: "flex" },
+              mr: 1,
+            }}
+          >
+            <img src={logo} alt="" width={45} height={65} />
+          </Icon>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              sx={{ color: "#FE6666" }}
+            >
+              <MenuIcon sx={{ color: "#FE6666" }} />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: "block", md: "none" },
+              }}
+              style={{ fontFamily: "Edo" }}
+            >
+              {pages.map((page) => (
+                <MenuItem
+                  sx={{
+                    background: "#1F262E",
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                  }}
+                  key={page}
+                  onClick={handleCloseNavMenu}
+                >
+                  <Typography
+                    sx={{ color: "#FE6666", fontFamily: "Edo" }}
+                    textAlign="center"
+                  >
+                    {page}
+                  </Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+          <Icon
+            sx={{
+              mr: 2,
+              display: { xs: "flex", md: "none" },
+              flexGrow: 1,
+              width: 45,
+              height: 65,
+            }}
+          >
+            <img src={logo} alt="" width={45} height={65} />
+          </Icon>
+          <Box
+            style={{ background: "#1F262E", fontFamily: "Edo" }}
+            sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
+          >
+            {pages.map((page) => (
+              <Button
+                key={page}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: "#FE6666", display: "block" }}
+              >
+                {page}
+              </Button>
+            ))}
+          </Box>
+
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: "45px" }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
+};
+
+export default NavBar;
